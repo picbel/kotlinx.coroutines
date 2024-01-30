@@ -1,6 +1,7 @@
 package kotlinx.coroutines.debug
 
 import kotlinx.coroutines.*
+import org.junit.*
 import org.junit.Test
 import kotlin.coroutines.*
 import kotlin.test.*
@@ -8,6 +9,12 @@ import kotlin.test.*
 class CoroutinesDumpTest : DebugTestBase() {
     private val monitor = Any()
     private var coroutineThread: Thread? = null // guarded by monitor
+
+    @Before
+    override fun setUp() {
+        super.setUp()
+        DebugProbes.enableCreationStackTraces = true
+    }
 
     @Test
     fun testSuspendedCoroutine() = runBlocking {
